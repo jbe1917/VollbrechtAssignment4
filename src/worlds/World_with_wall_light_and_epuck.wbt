@@ -1,0 +1,117 @@
+#VRML_SIM V8.5 utf8
+WorldInfo {
+  info [
+    "The model of the E-puck robot"
+    "Author: Simon Blanchoud & Olivier Michel"
+    "Date: 01 SEP 2006"
+  ]
+  title "E-puck"
+}
+Viewpoint {
+  orientation -0.32225843 0.8885312 0.32659119 1.8009826
+  position 1.5462123 2.0848608 -0.17488694
+}
+Background {
+  skyColor [
+    0.4 0.7 1
+  ]
+}
+DEF FLOOR Solid {
+  translation 0 -0.0001 0
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+          specularColor 0.196078 0.196078 0.196078
+        }
+        texture ImageTexture {
+          url [
+            "textures/lightwood.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          center 0.46 0
+          rotation -0.32
+          translation -1.01 0
+        }
+      }
+      geometry DEF PLANE Plane {
+        size 2 2
+      }
+    }
+  ]
+  boundingObject USE PLANE
+}
+DEF WALL1 Solid {
+  translation 1 0.05 0
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance DEF WALL_APPEARANCE Appearance {
+        material Material {
+          diffuseColor 1 0.501961 0.25098
+        }
+      }
+      geometry Box {
+        size 0.02 0.1 2
+      }
+    }
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DirectionalLight {
+  direction 0 -1 0
+}
+E-puck {
+  hidden translation_1 -0.026 0.020002597 1.9190222e-9
+  hidden rotation_1 0.043259687 -0.0071079917 0.99903858 1.7365068e-10
+  hidden translation_2 0.026 0.020002584 1.8243707e-9
+  hidden rotation_2 0.072932651 0.0070954865 -0.99731163 -1.7415789e-10
+  translation -0.45223478 -0.00016538046 -0.24405442
+  rotation 0.00028019515 0.99999996 -3.0468111e-5 0.34318855
+  controller "AssignmentBProportional"
+}
+DEF WALL2 Solid {
+  translation -1 0.05 0
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL3 Solid {
+  translation 0 0.05 1
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL4 Solid {
+  translation 0 0.05 -1
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF LIGHT Solid {
+  translation -0.944992 0.05 -0.950714
+  scale 0.5 0.5 0.5
+  children [
+    PointLight {
+      intensity 0.2
+    }
+    Shape {
+      appearance Appearance {
+        material Material {
+          emissiveColor 1 1 1
+        }
+      }
+      geometry DEF LIGHT_GEOMETRY Sphere {
+        radius 0.1
+      }
+    }
+  ]
+  boundingObject USE LIGHT_GEOMETRY
+  locked TRUE
+}

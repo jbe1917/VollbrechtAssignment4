@@ -1,0 +1,121 @@
+#VRML_SIM V8.5 utf8
+WorldInfo {
+  info [
+    "The model of the E-puck robot"
+    "Author: Simon Blanchoud & Olivier Michel"
+    "Date: 01 SEP 2006"
+  ]
+  title "E-puck"
+  basicTimeStep 16
+}
+Viewpoint {
+  orientation 0.0015626023 -0.72040463 -0.69355225 3.1583437
+  position 0.038138942 2.3537657 -0.48284838
+}
+PointLight {
+  ambientIntensity 0.5
+  intensity 0.6
+  location 0.14 0.6 -0.55
+  castShadows TRUE
+}
+PointLight {
+  ambientIntensity 0.5
+  intensity 0.6
+  location -0.43 0.6 0.5
+}
+Background {
+  skyColor [
+    0.4 0.7 1
+  ]
+}
+DEF FLOOR Solid {
+  translation 0 -0.0001 0
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+          specularColor 0.196078 0.196078 0.196078
+        }
+        texture ImageTexture {
+          url [
+            "textures/lightwood.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          center 0.46 0
+          rotation -0.32
+          translation -1.01 0
+        }
+      }
+      geometry DEF PLANE Plane {
+        size 2 2
+      }
+    }
+  ]
+  boundingObject USE PLANE
+}
+DEF WALL1 Solid {
+  translation 1 0.05 0
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance DEF WALL_APPEARANCE Appearance {
+        material Material {
+          diffuseColor 1 0.501961 0.25098
+        }
+      }
+      geometry Box {
+        size 0.02 0.1 2
+      }
+    }
+  ]
+  boundingObject USE WALL_SHAPE
+}
+E-puck {
+  translation -0.511253 -0.000131983 -0.930264
+  rotation 0.011133695 0.99980657 0.016212993 4.67845
+  controller "AssignmentEProportional"
+}
+DEF WALL2 Solid {
+  translation -1 0.05 0
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL3 Solid {
+  translation 0 0.05 1
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL4 Solid {
+  translation 0 0.05 -1
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL_OBSTACLE_VERTICAL Solid {
+  translation 0.0240933 0.05 -0.79648
+  children [
+    DEF WALL_OBSTACLE Shape {
+      appearance USE WALL_APPEARANCE
+      geometry Box {
+        size 0.02 0.1 0.4
+      }
+    }
+  ]
+  boundingObject USE WALL_OBSTACLE
+}
+DEF WALL_OBSTACLE_HORIZONTAL Solid {
+  translation 0.0161596 0.05 -0.603908
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_OBSTACLE
+  ]
+  boundingObject USE WALL_OBSTACLE
+}

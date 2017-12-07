@@ -1,0 +1,70 @@
+#VRML_SIM V8.5 utf8
+WorldInfo {
+  info [
+    "The model of the E-puck robot"
+  ]
+  title "E-puck simulation"
+  contactProperties [
+    ContactProperties {
+      material1 "frictionFloor"
+      material2 "frictionBox"
+      coulombFriction [
+        0.005, 0.005
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.076922491 0.79624794 0.60006012 3.329448
+  position -0.34386484 0.95470057 -0.54676362
+  follow "e-puck"
+}
+Background {
+  skyColor [
+    0.4 0.7 1
+  ]
+}
+PointLight {
+  ambientIntensity 1
+  intensity 0.6
+  location 0.14 0.6 -0.55
+  castShadows TRUE
+}
+PointLight {
+  ambientIntensity 1
+  intensity 0.6
+  location -0.43 0.6 0.5
+}
+RectangleArena {
+  contactMaterial "frictionFloor"
+  floorSize 2 2
+}
+SolidBox {
+  translation -0.40156501 0.04996076 -0.35016897
+  rotation -5.0161178e-9 1 5.6081969e-8 0.24053125
+  size 0.1 0.1 0.1
+  contactMaterial "frictionBox"
+  appearance Appearance {
+    material Material {
+      diffuseColor 1 0 0
+      emissiveColor 1 0 0
+    }
+  }
+  physics DEF BOX_PHYSICS Physics {
+    density -1
+    mass 0.1
+    damping Damping {
+      linear 0.5
+      angular 0
+    }
+  }
+}
+E-puck {
+  hidden translation_1 -0.026 0.02000118 9.4809416e-10
+  hidden rotation_1 0.47363035 0.06718837 0.87815717 9.0862634e-11
+  hidden translation_2 0.026 0.020001174 1.4157979e-9
+  hidden rotation_2 0.29036106 -0.07472171 -0.95399535 -8.1803692e-11
+  translation -0.050908608 -6.4114755e-5 -0.42264275
+  rotation -0.00034388926 0.99999982 0.00048868737 1.903061
+  controller "AssignmentCBangBang"
+}
