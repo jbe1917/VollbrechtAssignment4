@@ -1,5 +1,3 @@
-package controllers.AssignmentABangBang;
-
 import com.cyberbotics.webots.controller.DifferentialWheels;
 import com.cyberbotics.webots.controller.LightSensor;
 
@@ -86,13 +84,6 @@ public class AssignmentABangBang extends DifferentialWheels {
 	 */
 	private void driveForward() {
 		setSpeed(MAX_SPEED, MAX_SPEED);
-	}
-
-	/**
-	 * Robot stops
-	 */
-	private void stop() {
-		setSpeed(MIN_SPEED, MIN_SPEED);
 	}
 
 	/**

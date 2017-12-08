@@ -1,5 +1,3 @@
-package controllers.AssignmentAProportional;
-
 import com.cyberbotics.webots.controller.DifferentialWheels;
 import com.cyberbotics.webots.controller.LightSensor;
 
@@ -39,21 +37,21 @@ public class AssignmentAProportional extends DifferentialWheels {
 	 */
 	public void run() {
 		while (step(TIME_STEP) != -1) {
-			// difference between the measurement of the front-left and front-right sensor.
-			// if negative -> light is at the left
-			// if positive -> light is at the right
+			// calculates the average value of the light sensors at the left and right side of the robot.
 			double leftValue = lightSensors[L_FRONT_LEFT].getValue() + lightSensors[L_LEFT].getValue()
-                        			+ lightSensors[L_MEDIUM_LEFT].getValue() + lightSensors[L_BACK_LEFT].getValue();
-                      leftValue += 1;
-                      leftValue /= 4;
-                      double rightValue = lightSensors[L_FRONT_RIGHT].getValue() + lightSensors[L_RIGHT].getValue()
-                        			+ lightSensors[L_MEDIUM_RIGHT].getValue() + lightSensors[L_BACK_RIGHT].getValue();
-                      rightValue += 1;
-                      rightValue /= 4;
-                      
-                      double leftSpeed = ((1000 / rightValue) * 1000);
-                      double rightSpeed = ((1000 / leftValue) * 1000);
-                           
+					+ lightSensors[L_MEDIUM_LEFT].getValue() + lightSensors[L_BACK_LEFT].getValue();
+			leftValue += 1;
+			leftValue /= 4;
+			double rightValue = lightSensors[L_FRONT_RIGHT].getValue() + lightSensors[L_RIGHT].getValue()
+					+ lightSensors[L_MEDIUM_RIGHT].getValue() + lightSensors[L_BACK_RIGHT].getValue();
+			rightValue += 1;
+			rightValue /= 4;
+
+			//if light is more at the right the right value is lower so the left speed is higher
+			//-> robot turns to right
+			double leftSpeed = ((1000 / rightValue) * 1000);
+			double rightSpeed = ((1000 / leftValue) * 1000);
+
 			setSpeed(leftSpeed, rightSpeed);
 		}
 

@@ -1,5 +1,3 @@
-package controllers.AssignmentCProportional;
-
 import com.cyberbotics.webots.controller.DifferentialWheels;
 import com.cyberbotics.webots.controller.DistanceSensor;
 import com.cyberbotics.webots.controller.Camera;
@@ -7,14 +5,12 @@ import com.cyberbotics.webots.controller.Camera;
 public class AssignmentCProportional extends DifferentialWheels {
 	private static final int TIME_STEP = 15;
 
-	private static int COLOR_TOLERANCE = 10;
-	private static int DISTANCE_TOLERANCE = 75;
+	private final static int COLOR_TOLERANCE = 10;
+	private final static int DISTANCE_TOLERANCE = 75;
 
-	private static int MIN_SPEED = 0; // min. motor speed
-	private static int MAX_SPEED = 1000; // max. motor speed
+	private final static int FRONT_LEFT_SENSOR = 0;
+	private final static int FRONT_RIGHT_SENSOR = 1;
 
-	private static int FRONT_LEFT_SENSOR = 0;
-	private static int FRONT_RIGHT_SENSOR = 1;
 	private final DistanceSensor[] distanceSensors;
 	private final Camera camera;
 
@@ -45,24 +41,20 @@ public class AssignmentCProportional extends DifferentialWheels {
 
 			int[] image = camera.getImage();
 
-			int rLeft = Camera.imageGetRed(image, camera.getWidth(), 0, (height / 2));
-			int gLeft = Camera.imageGetGreen(image, camera.getWidth(), 0, (height / 2));
-			int bLeft = Camera.imageGetBlue(image, camera.getWidth(), 0, (height / 2));
-
-			int rCenter = Camera.imageGetRed(image, camera.getWidth(), (width / 2), (height / 2));
 			int gCenter = Camera.imageGetGreen(image, camera.getWidth(), (width / 2), (height / 2));
 			int bCenter = Camera.imageGetBlue(image, camera.getWidth(), (width / 2), (height / 2));
 
-			int rRight = Camera.imageGetRed(image, camera.getWidth(), width - 1, (height / 2));
-			int gRight = Camera.imageGetGreen(image, camera.getWidth(), width - 1, (height / 2));
-			int bRight = Camera.imageGetBlue(image, camera.getWidth(), width - 1, (height / 2));
+			//if the ball is ahead the ballConstant is not zero
+			int ballConstant = (2 * COLOR_TOLERANCE / (1 + gCenter + bCenter));
 
-			int ballConstant = (1 / (1 + gCenter + bCenter));
+			//says if the difference between front distance sensors is within tolerance
 			int toleranceConstant = (int) Math.sqrt(Math.pow(((distanceSensors[FRONT_LEFT_SENSOR].getValue() - distanceSensors[FRONT_RIGHT_SENSOR].getValue()) / DISTANCE_TOLERANCE), 2));
 
+			//gives the speed calculated with the sensor values. if the ball is more at the right the right wheel turns slower
 			int leftSensorValues = (int)(1000 - ((Math.sqrt(Math.pow((distanceSensors[FRONT_LEFT_SENSOR].getValue() / distanceSensors[FRONT_RIGHT_SENSOR].getValue()), 2)) * toleranceConstant)));
 			int rightSensorValues = (int)(1000 - ((Math.sqrt(Math.pow((distanceSensors[FRONT_RIGHT_SENSOR].getValue() / distanceSensors[FRONT_LEFT_SENSOR].getValue()), 2)) * toleranceConstant)));
-			
+
+			//right wheel is multiplied with ball constant -> if ball is not found the robot turns searching for it.
 			int speedLeft = (int) Math.sqrt(Math.pow(Math.round(leftSensorValues * ballConstant), 2));
 			int speedRight = (int) Math.sqrt(Math.pow(Math.round(rightSensorValues), 2));
 

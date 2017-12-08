@@ -1,5 +1,3 @@
-package controllers.AssignmentEProportional;
-
 import com.cyberbotics.webots.controller.DifferentialWheels;
 import com.cyberbotics.webots.controller.DistanceSensor;
 
@@ -36,17 +34,20 @@ public class AssignmentEProportional extends DifferentialWheels {
 	 */
 	public void run() {
 		while (step(TIME_STEP) != -1) {
-        		int leftConstant = (int)(500 * Math.sqrt(Math.pow((sensors[S_LEFT].getValue() / WALL_TO_FAR_VALUE), 2)));
-        		System.out.println(leftConstant);
-        		int rightConstant = (int)(500 * Math.sqrt(Math.pow((WALL_TO_NEAR_VALUE / sensors[S_LEFT].getValue()), 2)) * Math.sqrt(Math.pow((WALL_TO_NEAR_VALUE / sensors[S_MEDIUM_LEFT].getValue()), 2)));
-			System.out.println(rightConstant);
-			int leftSpeed = Math.min(1000, leftConstant);
-			int frontConstant = (int)Math.sqrt(Math.pow((int)(MAX_SENSOR_VALUE / ((sensors[S_FRONT_LEFT].getValue() + sensors[S_FRONT_RIGHT].getValue()) / 2)), 2));
-			int rightSpeed = Math.min(1000, rightConstant * frontConstant);
+			//if wall is too far the value is below 500 to turn left, if the wall distance is ok the value is over 500
+			int leftSpeedValue = (int) (500 * Math.sqrt(Math.pow((sensors[S_LEFT].getValue() / WALL_TO_FAR_VALUE), 2)));
+			//if wall is too near the value is below 500 to turn right, if the wall distance is ok the value is over 500
+			int rightSpeedValue = (int) (500 * Math.sqrt(Math.pow((WALL_TO_NEAR_VALUE / sensors[S_LEFT].getValue()), 2)) * Math.sqrt(Math.pow((WALL_TO_NEAR_VALUE / sensors[S_MEDIUM_LEFT].getValue()), 2)));
+
+			//if a wall is ahead the value is zero
+			int frontConstant = (int) Math.sqrt(Math.pow((int) (MAX_SENSOR_VALUE / ((sensors[S_FRONT_LEFT].getValue() + sensors[S_FRONT_RIGHT].getValue()) / 2)), 2));
+
+			//right speed is zero if wall is ahead to turn right
+			int leftSpeed = Math.min(1000, leftSpeedValue);
+			int rightSpeed = Math.min(1000, rightSpeedValue * frontConstant);
 
 			setSpeed(leftSpeed, rightSpeed);
 		}
-
 	}
 
 	/**

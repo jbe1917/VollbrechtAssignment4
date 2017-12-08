@@ -1,5 +1,3 @@
-package controllers.AssignmentCBangBang;
-
 import com.cyberbotics.webots.controller.DifferentialWheels;
 import com.cyberbotics.webots.controller.DistanceSensor;
 import com.cyberbotics.webots.controller.Camera;
@@ -7,7 +5,7 @@ import com.cyberbotics.webots.controller.Camera;
 public class AssignmentCBangBang extends DifferentialWheels {
 	private static final int TIME_STEP = 15;
 
-	private static int COLOR_TOLERANCE = 10;
+	private static final int COLOR_TOLERANCE = 10;
 	private static final int DISTANCE_TOLERANCE = 1000;
 
 	private static final int MIN_SPEED = 0; // min. motor speed
@@ -42,7 +40,7 @@ public class AssignmentCBangBang extends DifferentialWheels {
 		int height = camera.getHeight();
 		int width = camera.getWidth();
 		while (step(TIME_STEP) != -1) {
-
+			//analyse image and save rgb values at right, left and center of image
 			int[] image = camera.getImage();
 
 			int rLeft = Camera.imageGetRed(image, camera.getWidth(), 0, (height / 2));
@@ -57,15 +55,17 @@ public class AssignmentCBangBang extends DifferentialWheels {
 			int gRight = Camera.imageGetGreen(image, camera.getWidth(), width - 1, (height / 2));
 			int bRight = Camera.imageGetBlue(image, camera.getWidth(), width - 1, (height / 2));
 
-			if (!(gCenter < 10 && bCenter < 10)) {
+			if (!(gCenter < COLOR_TOLERANCE && bCenter < COLOR_TOLERANCE)) {
+				//ball is not in focus -> search for it
 				searchBall(image, width, height);
 			} else if ((gRight < COLOR_TOLERANCE && bRight < COLOR_TOLERANCE) && (gLeft > COLOR_TOLERANCE && bLeft > COLOR_TOLERANCE)) {
 				// drive Right - ball is at the right
 				driveRight();
-			} else if ((gLeft < 10 && bLeft < COLOR_TOLERANCE) && (gRight > COLOR_TOLERANCE && bRight > COLOR_TOLERANCE)) {
+			} else if ((gLeft < COLOR_TOLERANCE && bLeft < COLOR_TOLERANCE) && (gRight > COLOR_TOLERANCE && bRight > COLOR_TOLERANCE)) {
 				// drive Left - ball is at the left
 				driveLeft();
 			} else {
+				//ball is just ahead. balance it using the distance sensors
 				double difference = distanceSensors[FRONT_LEFT_SENSOR].getValue()
 						- distanceSensors[FRONT_RIGHT_SENSOR].getValue();
 
@@ -82,6 +82,8 @@ public class AssignmentCBangBang extends DifferentialWheels {
 	}
 
 	private void searchBall(int[] image, int width, int height) {
+		//searches for the ball in the camera image
+		//saves the start and end index which is the most left and most right pixel belonging to the ball
 		int startAtIndex = 0;
 		int endAtIndex = 0;
 		for (int index = 0; (index < width) && (startAtIndex == 0); index++) {
@@ -91,6 +93,7 @@ public class AssignmentCBangBang extends DifferentialWheels {
 				startAtIndex = index;
 			}
 		}
+		//ball not found. turn left to search there
 		if (startAtIndex == 0) {
 			driveLeft();
 			return;
@@ -98,13 +101,15 @@ public class AssignmentCBangBang extends DifferentialWheels {
 		for (int index = startAtIndex; (index < width) && (endAtIndex == 0); index++) {
 			int green = Camera.imageGetGreen(image, camera.getWidth(), index, (height / 2));
 			int blue = Camera.imageGetBlue(image, camera.getWidth(), index, (height / 2));
-			if (green > 10 || blue > 10) {
+			if (green > COLOR_TOLERANCE || blue > COLOR_TOLERANCE) {
 				endAtIndex = index;
 			}
 		}
+		//ball reaches until end of image at the right
 		if (endAtIndex == 0) {
 			endAtIndex = width - 1;
 		}
+		//center of the ball
 		int median = ((startAtIndex + endAtIndex) / 2);
 		if (median < (width / 2)) {
 			driveLeft();
@@ -132,13 +137,6 @@ public class AssignmentCBangBang extends DifferentialWheels {
 	 */
 	private void driveForward() {
 		setSpeed(MAX_SPEED, MAX_SPEED);
-	}
-
-	/**
-	 * Robot stops
-	 */
-	private void stop() {
-		setSpeed(MIN_SPEED, MIN_SPEED);
 	}
 
 	/**

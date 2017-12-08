@@ -1,5 +1,3 @@
-package controllers.AssignmentEBangBang;
-
 import com.cyberbotics.webots.controller.DifferentialWheels;
 import com.cyberbotics.webots.controller.DistanceSensor;
 
@@ -52,7 +50,7 @@ public class AssignmentEBangBang extends DifferentialWheels {
 				// drive left - wall too far
 				driveLeft();
 			} else {
-				// drive forward if nothing is in front of the robot 
+				// drive forward -> nothing is in front of the robot and wall distance is okay
 				driveForward();
 			}
 		}

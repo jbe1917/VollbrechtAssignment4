@@ -1,5 +1,3 @@
-package controllers.BangBangBasicReactive;
-
 import com.cyberbotics.webots.controller.DifferentialWheels;
 import com.cyberbotics.webots.controller.DistanceSensor;
 
