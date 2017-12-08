@@ -57,8 +57,8 @@ public class AssignmentBProportional extends DifferentialWheels {
 			rightValue /= 4;
 
 			//distance constant is zero if left or right distance constant is zero so the robot stops.
-			double distanceConstantLeft = (int) Math.sqrt(Math.pow(Math.round((MAX_SENSOR_VALUE / (distanceSensors[D_FRONT_LEFT].getValue() + 1))), 2));
-			double distanceConstantRight = (int) Math.sqrt(Math.pow(Math.round((MAX_SENSOR_VALUE / (distanceSensors[D_FRONT_RIGHT].getValue() + 1))), 2));
+			double distanceConstantLeft = buildAbs((int) Math.round((MAX_SENSOR_VALUE / (distanceSensors[D_FRONT_LEFT].getValue() + 1))));
+			double distanceConstantRight = buildAbs((int) Math.round((MAX_SENSOR_VALUE / (distanceSensors[D_FRONT_RIGHT].getValue() + 1))));
 
 			int distanceConstant = (int) Math.round((distanceConstantLeft * distanceConstantRight) / ((distanceConstantLeft * distanceConstantRight) + 1));
 
@@ -70,6 +70,10 @@ public class AssignmentBProportional extends DifferentialWheels {
 
 			setSpeed(leftSpeed, rightSpeed);
 		}
+	}
+
+	private int buildAbs(int number){
+		return (int) Math.sqrt(Math.pow(number, 2));
 	}
 
 	/**

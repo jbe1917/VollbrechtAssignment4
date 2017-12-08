@@ -48,18 +48,22 @@ public class AssignmentCProportional extends DifferentialWheels {
 			int ballConstant = (2 * COLOR_TOLERANCE / (1 + gCenter + bCenter));
 
 			//says if the difference between front distance sensors is within tolerance
-			int toleranceConstant = (int) Math.sqrt(Math.pow(((distanceSensors[FRONT_LEFT_SENSOR].getValue() - distanceSensors[FRONT_RIGHT_SENSOR].getValue()) / DISTANCE_TOLERANCE), 2));
+			int toleranceConstant = buildAbs((int) ((distanceSensors[FRONT_LEFT_SENSOR].getValue() - distanceSensors[FRONT_RIGHT_SENSOR].getValue()) / DISTANCE_TOLERANCE));
 
 			//gives the speed calculated with the sensor values. if the ball is more at the right the right wheel turns slower
-			int leftSensorValues = (int)(1000 - ((Math.sqrt(Math.pow((distanceSensors[FRONT_LEFT_SENSOR].getValue() / distanceSensors[FRONT_RIGHT_SENSOR].getValue()), 2)) * toleranceConstant)));
-			int rightSensorValues = (int)(1000 - ((Math.sqrt(Math.pow((distanceSensors[FRONT_RIGHT_SENSOR].getValue() / distanceSensors[FRONT_LEFT_SENSOR].getValue()), 2)) * toleranceConstant)));
+			int leftSensorValues = (1000 - buildAbs((int) ((distanceSensors[FRONT_LEFT_SENSOR].getValue() / distanceSensors[FRONT_RIGHT_SENSOR].getValue()) * toleranceConstant)));
+			int rightSensorValues = (1000 - buildAbs((int) ((distanceSensors[FRONT_RIGHT_SENSOR].getValue() / distanceSensors[FRONT_LEFT_SENSOR].getValue()) * toleranceConstant)));
 
 			//right wheel is multiplied with ball constant -> if ball is not found the robot turns searching for it.
-			int speedLeft = (int) Math.sqrt(Math.pow(Math.round(leftSensorValues * ballConstant), 2));
-			int speedRight = (int) Math.sqrt(Math.pow(Math.round(rightSensorValues), 2));
+			int speedLeft = buildAbs(Math.round(leftSensorValues * ballConstant));
+			int speedRight = buildAbs(Math.round(rightSensorValues));
 
 			setSpeed(Math.min(1000, speedLeft), Math.min(1000, speedRight));
 		}
+	}
+
+	private int buildAbs(int number){
+		return (int) Math.sqrt(Math.pow(number, 2));
 	}
 
 	/**

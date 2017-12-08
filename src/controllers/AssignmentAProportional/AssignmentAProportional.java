@@ -49,8 +49,8 @@ public class AssignmentAProportional extends DifferentialWheels {
 
 			//if light is more at the right the right value is lower so the left speed is higher
 			//-> robot turns to right
-			double leftSpeed = ((1000 / rightValue) * 1000);
-			double rightSpeed = ((1000 / leftValue) * 1000);
+			double leftSpeed = Math.min(((1000 / rightValue) * 1000), 1000);
+			double rightSpeed = Math.min(((1000 / leftValue) * 1000), 1000);
 
 			setSpeed(leftSpeed, rightSpeed);
 		}

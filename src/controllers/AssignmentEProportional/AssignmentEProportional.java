@@ -35,12 +35,12 @@ public class AssignmentEProportional extends DifferentialWheels {
 	public void run() {
 		while (step(TIME_STEP) != -1) {
 			//if wall is too far the value is below 500 to turn left, if the wall distance is ok the value is over 500
-			int leftSpeedValue = (int) (500 * Math.sqrt(Math.pow((sensors[S_LEFT].getValue() / WALL_TO_FAR_VALUE), 2)));
+			int leftSpeedValue = (500 * buildAbs((int) (sensors[S_LEFT].getValue() / WALL_TO_FAR_VALUE)));
 			//if wall is too near the value is below 500 to turn right, if the wall distance is ok the value is over 500
-			int rightSpeedValue = (int) (500 * Math.sqrt(Math.pow((WALL_TO_NEAR_VALUE / sensors[S_LEFT].getValue()), 2)) * Math.sqrt(Math.pow((WALL_TO_NEAR_VALUE / sensors[S_MEDIUM_LEFT].getValue()), 2)));
+			int rightSpeedValue = (500 * buildAbs((int)(WALL_TO_NEAR_VALUE / sensors[S_LEFT].getValue())) * buildAbs((int) (WALL_TO_NEAR_VALUE / sensors[S_MEDIUM_LEFT].getValue())));
 
 			//if a wall is ahead the value is zero
-			int frontConstant = (int) Math.sqrt(Math.pow((int) (MAX_SENSOR_VALUE / ((sensors[S_FRONT_LEFT].getValue() + sensors[S_FRONT_RIGHT].getValue()) / 2)), 2));
+			int frontConstant = buildAbs((int) (MAX_SENSOR_VALUE / ((sensors[S_FRONT_LEFT].getValue() + sensors[S_FRONT_RIGHT].getValue()) / 2)));
 
 			//right speed is zero if wall is ahead to turn right
 			int leftSpeed = Math.min(1000, leftSpeedValue);
@@ -48,6 +48,10 @@ public class AssignmentEProportional extends DifferentialWheels {
 
 			setSpeed(leftSpeed, rightSpeed);
 		}
+	}
+
+	private int buildAbs(int number){
+		return (int) Math.sqrt(Math.pow(number, 2));
 	}
 
 	/**
