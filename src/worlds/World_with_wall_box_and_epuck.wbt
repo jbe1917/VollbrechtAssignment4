@@ -16,7 +16,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation 0.076922491 0.79624794 0.60006012 3.329448
-  position -0.34386484 0.95470057 -0.54676362
+  position -0.34386484 0.95394535 -0.54676362
   follow "e-puck"
 }
 Background {
@@ -40,16 +40,12 @@ RectangleArena {
   floorSize 2 2
 }
 SolidBox {
-  translation -0.40156501 0.04996076 -0.35016897
-  rotation -5.0161178e-9 1 5.6081969e-8 0.24053125
+  hidden linearVelocity_0 -0.057596 -5.72273e-06 0.00870175
+  hidden angularVelocity_0 -8.12605e-05 -0.275067 -0.000158506
+  translation -0.3897682 0.049960589 -0.35073531
+  rotation -7.5596434e-06 1 -1.645039e-05 0.25479807
   size 0.1 0.1 0.1
   contactMaterial "frictionBox"
-  appearance Appearance {
-    material Material {
-      diffuseColor 1 0 0
-      emissiveColor 1 0 0
-    }
-  }
   physics DEF BOX_PHYSICS Physics {
     density -1
     mass 0.1
@@ -60,11 +56,7 @@ SolidBox {
   }
 }
 E-puck {
-  hidden translation_1 -0.026 0.02000118 9.4809416e-10
-  hidden rotation_1 0.47363035 0.06718837 0.87815717 9.0862634e-11
-  hidden translation_2 0.026 0.020001174 1.4157979e-9
-  hidden rotation_2 0.29036106 -0.07472171 -0.95399535 -8.1803692e-11
-  translation -0.050908608 -6.4114755e-5 -0.42264275
-  rotation -0.00034388926 0.99999982 0.00048868737 1.903061
-  controller "AssignmentCBangBang"
+  translation -0.050908608 -0.00081933427 -0.42264275
+  rotation 0.00091415572 0.99999838 -0.0015502342 1.903062
+  controller "ProportionalC"
 }

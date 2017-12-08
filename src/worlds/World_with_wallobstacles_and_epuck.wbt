@@ -74,7 +74,7 @@ DEF WALL1 Solid {
 E-puck {
   translation -0.511253 -0.000131983 -0.930264
   rotation 0.011133695 0.99980657 0.016212993 4.67845
-  controller "AssignmentEProportional"
+  controller "ProportionalE"
 }
 DEF WALL2 Solid {
   translation -1 0.05 0

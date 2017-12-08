@@ -8,7 +8,7 @@ public class AssignmentCProportional extends DifferentialWheels {
 	private static final int TIME_STEP = 15;
 
 	private static int COLOR_TOLERANCE = 10;
-	private static int DISTANCE_TOLLERANCE = 1000;
+	private static int DISTANCE_TOLERANCE = 75;
 
 	private static int MIN_SPEED = 0; // min. motor speed
 	private static int MAX_SPEED = 1000; // max. motor speed
@@ -57,65 +57,17 @@ public class AssignmentCProportional extends DifferentialWheels {
 			int gRight = Camera.imageGetGreen(image, camera.getWidth(), width - 1, (height / 2));
 			int bRight = Camera.imageGetBlue(image, camera.getWidth(), width - 1, (height / 2));
 
-			/*if (!(gCenter < 10 && bCenter < 10)) {
-				searchBall(image, width, height);
-			} else if ((gRight < 10 && bRight < 10) && (gLeft > 10 && bLeft > 10)) {
-				// drive Right - ball is at the right
-				driveRight();
-			} else if ((gLeft < 10 && bLeft < 10) && (gRight > 10 && bRight > 10)) {
-				// drive Left - ball is at the left
-				driveLeft();
-			}*/
-			int speedLeft = (1/(gRight+bRight+1)) + (1/(gCenter+bCenter+1))* 500;
-			int speedRight = (1/(gLeft+bLeft+1)) + (1/(gCenter+bCenter+1)) * 500;
-			System.out.println(speedLeft + " - " + speedRight);
-			setSpeed(speedLeft, speedRight);
-			/* else {
-				double difference = distanceSensors[FRONT_LEFT_SENSOR].getValue()
-						- distanceSensors[FRONT_RIGHT_SENSOR].getValue();
+			int ballConstant = (1 / (1 + gCenter + bCenter));
+			int toleranceConstant = (int) Math.sqrt(Math.pow(((distanceSensors[FRONT_LEFT_SENSOR].getValue() - distanceSensors[FRONT_RIGHT_SENSOR].getValue()) / DISTANCE_TOLERANCE), 2));
 
-				if (difference > DISTANCE_TOLLERANCE) {
-					driveLeft();
-				} else if (difference < (DISTANCE_TOLLERANCE * -1)) {
-					driveRight();
-				} else { //drive forward because ball is straight ahead
-					driveForward();
-				}
-			*/}/*
-		}
+			int leftSensorValues = (int)(1000 - ((Math.sqrt(Math.pow((distanceSensors[FRONT_LEFT_SENSOR].getValue() / distanceSensors[FRONT_RIGHT_SENSOR].getValue()), 2)) * toleranceConstant)));
+			int rightSensorValues = (int)(1000 - ((Math.sqrt(Math.pow((distanceSensors[FRONT_RIGHT_SENSOR].getValue() / distanceSensors[FRONT_LEFT_SENSOR].getValue()), 2)) * toleranceConstant)));
+			
+			int speedLeft = (int) Math.sqrt(Math.pow(Math.round(leftSensorValues * ballConstant), 2));
+			int speedRight = (int) Math.sqrt(Math.pow(Math.round(rightSensorValues), 2));
 
-	}
-
-	private void searchBall(int[] image, int width, int height) {
-		int startAtIndex = 0;
-		int endAtIndex = 0;
-		for (int index = 0; (index < width) && (startAtIndex == 0); index++) {
-			int green = Camera.imageGetGreen(image, camera.getWidth(), index, (height / 2));
-			int blue = Camera.imageGetBlue(image, camera.getWidth(), index, (height / 2));
-			if (green < 10 && blue < 10) {
-				startAtIndex = index;
-			}
+			setSpeed(Math.min(1000, speedLeft), Math.min(1000, speedRight));
 		}
-		if (startAtIndex == 0) {
-			driveLeft();
-			return;
-		}
-		for (int index = startAtIndex; (index < width) && (endAtIndex == 0); index++) {
-			int green = Camera.imageGetGreen(image, camera.getWidth(), index, (height / 2));
-			int blue = Camera.imageGetBlue(image, camera.getWidth(), index, (height / 2));
-			if (green > 10 || blue > 10) {
-				endAtIndex = index;
-			}
-		}
-		if (endAtIndex == 0) {
-			endAtIndex = width - 1;
-		}
-		int median = ((startAtIndex + endAtIndex) / 2);
-		if (median < (width / 2)) {
-			driveLeft();
-		} else {
-			driveRight();
-		}*/
 	}
 
 	/**
