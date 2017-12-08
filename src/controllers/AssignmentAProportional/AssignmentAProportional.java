@@ -1,24 +1,21 @@
 package controllers.AssignmentAProportional;
 
 import com.cyberbotics.webots.controller.DifferentialWheels;
-import com.cyberbotics.webots.controller.DistanceSensor;
 import com.cyberbotics.webots.controller.LightSensor;
 
 public class AssignmentAProportional extends DifferentialWheels {
-	private static int TIME_STEP = 15;
+	private static final int TIME_STEP = 15;
 
-	private static int L_BACK_LEFT = 0; // Light-Sensor left
-	private static int L_LEFT = 1; // Light-Sensor front left
-	private static int L_MEDIUM_LEFT = 2; // Light-Sensor front right
-	private static int L_FRONT_LEFT = 3; // Light-Sensor left
-	private static int L_FRONT_RIGHT = 4; // Light-Sensor left
-	private static int L_MEDIUM_RIGHT = 5; // Light-Sensor front left
-	private static int L_RIGHT = 6; // Light-Sensor front right
-	private static int L_BACK_RIGHT = 7; // Light-Sensor left
-	private static int MIN_SPEED = 0; // min. motor speed
-	private static int MAX_SPEED = 1000; // max. motor speed
+	private static final int L_BACK_LEFT = 0; // Light-Sensor left
+	private static final int L_LEFT = 1; // Light-Sensor front left
+	private static final int L_MEDIUM_LEFT = 2; // Light-Sensor front right
+	private static final int L_FRONT_LEFT = 3; // Light-Sensor left
+	private static final int L_FRONT_RIGHT = 4; // Light-Sensor left
+	private static final int L_MEDIUM_RIGHT = 5; // Light-Sensor front left
+	private static final int L_RIGHT = 6; // Light-Sensor front right
+	private static final int L_BACK_RIGHT = 7; // Light-Sensor left
 
-	private LightSensor[] lightSensors; // Array with all light sensors
+	private final LightSensor[] lightSensors; // Array with all light sensors
 
 	/**
 	 * Constructor

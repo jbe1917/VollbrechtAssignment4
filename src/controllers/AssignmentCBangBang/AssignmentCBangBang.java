@@ -5,18 +5,18 @@ import com.cyberbotics.webots.controller.DistanceSensor;
 import com.cyberbotics.webots.controller.Camera;
 
 public class AssignmentCBangBang extends DifferentialWheels {
-	private static int TIME_STEP = 15;
+	private static final int TIME_STEP = 15;
 
 	private static int COLOR_TOLERANCE = 10;
-	private static int DISTANCE_TOLLERANCE = 1000;
+	private static final int DISTANCE_TOLERANCE = 1000;
 
-	private static int MIN_SPEED = 0; // min. motor speed
-	private static int MAX_SPEED = 1000; // max. motor speed
+	private static final int MIN_SPEED = 0; // min. motor speed
+	private static final int MAX_SPEED = 1000; // max. motor speed
 
-	private static int FRONT_LEFT_SENSOR = 0;
-	private static int FRONT_RIGHT_SENSOR = 1;
-	private DistanceSensor[] distanceSensors;
-	private Camera camera;
+	private static final int FRONT_LEFT_SENSOR = 0;
+	private static final int FRONT_RIGHT_SENSOR = 1;
+	private final DistanceSensor[] distanceSensors;
+	private final Camera camera;
 
 	/**
 	 * Constructor
@@ -59,19 +59,19 @@ public class AssignmentCBangBang extends DifferentialWheels {
 
 			if (!(gCenter < 10 && bCenter < 10)) {
 				searchBall(image, width, height);
-			} else if ((gRight < 10 && bRight < 10) && (gLeft > 10 && bLeft > 10)) {
+			} else if ((gRight < COLOR_TOLERANCE && bRight < COLOR_TOLERANCE) && (gLeft > COLOR_TOLERANCE && bLeft > COLOR_TOLERANCE)) {
 				// drive Right - ball is at the right
 				driveRight();
-			} else if ((gLeft < 10 && bLeft < 10) && (gRight > 10 && bRight > 10)) {
+			} else if ((gLeft < 10 && bLeft < COLOR_TOLERANCE) && (gRight > COLOR_TOLERANCE && bRight > COLOR_TOLERANCE)) {
 				// drive Left - ball is at the left
 				driveLeft();
 			} else {
 				double difference = distanceSensors[FRONT_LEFT_SENSOR].getValue()
 						- distanceSensors[FRONT_RIGHT_SENSOR].getValue();
 
-				if (difference > DISTANCE_TOLLERANCE) {
+				if (difference > DISTANCE_TOLERANCE) {
 					driveLeft();
-				} else if (difference < (DISTANCE_TOLLERANCE * -1)) {
+				} else if (difference < (DISTANCE_TOLERANCE * -1)) {
 					driveRight();
 				} else { //drive forward because ball is straight ahead
 					driveForward();

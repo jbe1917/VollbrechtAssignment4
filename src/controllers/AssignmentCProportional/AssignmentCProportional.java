@@ -5,7 +5,7 @@ import com.cyberbotics.webots.controller.DistanceSensor;
 import com.cyberbotics.webots.controller.Camera;
 
 public class AssignmentCProportional extends DifferentialWheels {
-	private static int TIME_STEP = 15;
+	private static final int TIME_STEP = 15;
 
 	private static int COLOR_TOLERANCE = 10;
 	private static int DISTANCE_TOLLERANCE = 1000;
@@ -15,8 +15,8 @@ public class AssignmentCProportional extends DifferentialWheels {
 
 	private static int FRONT_LEFT_SENSOR = 0;
 	private static int FRONT_RIGHT_SENSOR = 1;
-	private DistanceSensor[] distanceSensors;
-	private Camera camera;
+	private final DistanceSensor[] distanceSensors;
+	private final Camera camera;
 
 	/**
 	 * Constructor

@@ -4,19 +4,19 @@ import com.cyberbotics.webots.controller.DifferentialWheels;
 import com.cyberbotics.webots.controller.DistanceSensor;
 
 public class BangBangBasicReactive extends DifferentialWheels {
-	private static int TIME_STEP = 15;
+	private static final int TIME_STEP = 15;
 
-	private static int MAX_SENSOR_VALUE = 200;
+	private static final int MAX_SENSOR_VALUE = 200;
 
-	private static int S_LEFT = 0; // Sensor left
-	private static int S_FRONT_LEFT = 1; // Sensor front left
-	private static int S_FRONT_RIGHT = 2; // Sensor front right
-	private static int S_RIGHT = 3; // Sensor left
-	private static int MIN_SPEED = 0; // min. motor speed
-	private static int MAX_SPEED = 1000; // max. motor speed
+	private static final int S_LEFT = 0; // Sensor left
+	private static final int S_FRONT_LEFT = 1; // Sensor front left
+	private static final int S_FRONT_RIGHT = 2; // Sensor front right
+	private static final int S_RIGHT = 3; // Sensor left
+	private static final int MIN_SPEED = 0; // min. motor speed
+	private static final int MAX_SPEED = 1000; // max. motor speed
 
 
-	private DistanceSensor[] sensors; // Array with all distance sensors
+	private final DistanceSensor[] sensors; // Array with all distance sensors
 
 	/**
 	 * Constructor
