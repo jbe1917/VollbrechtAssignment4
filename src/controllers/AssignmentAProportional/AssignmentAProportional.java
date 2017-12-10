@@ -40,11 +40,11 @@ public class AssignmentAProportional extends DifferentialWheels {
 			// calculates the average value of the light sensors at the left and right side of the robot.
 			double leftValue = lightSensors[L_FRONT_LEFT].getValue() + lightSensors[L_LEFT].getValue()
 					+ lightSensors[L_MEDIUM_LEFT].getValue() + lightSensors[L_BACK_LEFT].getValue();
-			leftValue += 1;
+			leftValue += 1; //if zero -> not divide by zero
 			leftValue /= 4;
 			double rightValue = lightSensors[L_FRONT_RIGHT].getValue() + lightSensors[L_RIGHT].getValue()
 					+ lightSensors[L_MEDIUM_RIGHT].getValue() + lightSensors[L_BACK_RIGHT].getValue();
-			rightValue += 1;
+			rightValue += 1;  //if zero -> not divide by zero
 			rightValue /= 4;
 
 			//if light is more at the right the right value is lower so the left speed is higher

@@ -53,7 +53,11 @@ public class AssignmentBBangBang extends DifferentialWheels {
 			// if negative -> light is at the left
 			// if positive -> light is at the right
 			double frontDifference = lightSensors[L_FRONT_LEFT].getValue() - lightSensors[L_FRONT_RIGHT].getValue();
-			if ((lightSensors[L_LEFT].getValue() < lightSensors[L_FRONT_LEFT].getValue())
+			if ((distanceSensors[D_FRONT_LEFT].getValue() > MAX_SENSOR_VALUE)
+					|| (distanceSensors[D_FRONT_RIGHT].getValue() > MAX_SENSOR_VALUE)) {
+				// stop - lightsource reached
+				stop();
+			} else if ((lightSensors[L_LEFT].getValue() < lightSensors[L_FRONT_LEFT].getValue())
 					|| (lightSensors[L_MEDIUM_LEFT].getValue() < lightSensors[L_FRONT_LEFT].getValue())
 					|| (lightSensors[L_BACK_LEFT].getValue() < lightSensors[L_FRONT_LEFT].getValue())
 					|| (frontDifference < (-1 * MAX_SENSOR_DIFFERENCE))) {
@@ -65,10 +69,6 @@ public class AssignmentBBangBang extends DifferentialWheels {
 					|| (frontDifference > MAX_SENSOR_DIFFERENCE)) {
 				// drive left - light is at the left
 				driveRight();
-			} else if ((distanceSensors[D_FRONT_LEFT].getValue() > MAX_SENSOR_VALUE)
-					|| (distanceSensors[D_FRONT_RIGHT].getValue() > MAX_SENSOR_VALUE)) {
-				// stop - lightsource reached
-				stop();
 			} else {
 				//drive forward because light is ahead
 				driveForward();

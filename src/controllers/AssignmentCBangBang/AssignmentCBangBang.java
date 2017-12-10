@@ -55,15 +55,19 @@ public class AssignmentCBangBang extends DifferentialWheels {
 			int gRight = Camera.imageGetGreen(image, camera.getWidth(), width - 1, (height / 2));
 			int bRight = Camera.imageGetBlue(image, camera.getWidth(), width - 1, (height / 2));
 
-			if (!(gCenter < COLOR_TOLERANCE && bCenter < COLOR_TOLERANCE)) {
+			if (!(gCenter < COLOR_TOLERANCE && bCenter < COLOR_TOLERANCE) &&
+					(gRight < COLOR_TOLERANCE && bRight < COLOR_TOLERANCE) &&
+					(gLeft > COLOR_TOLERANCE && bLeft > COLOR_TOLERANCE)) {
+				// drive Right - ball is at the right focus of the camera
+				driveRight();
+			} else if (!(gCenter < COLOR_TOLERANCE && bCenter < COLOR_TOLERANCE) &&
+					(gLeft < COLOR_TOLERANCE && bLeft < COLOR_TOLERANCE) &&
+					(gRight > COLOR_TOLERANCE && bRight > COLOR_TOLERANCE)) {
+				// drive Left - ball is at the left focus of the camera
+				driveLeft();
+			} else if (!(gCenter < COLOR_TOLERANCE && bCenter < COLOR_TOLERANCE)) {
 				//ball is not in focus -> search for it
 				searchBall(image, width, height);
-			} else if ((gRight < COLOR_TOLERANCE && bRight < COLOR_TOLERANCE) && (gLeft > COLOR_TOLERANCE && bLeft > COLOR_TOLERANCE)) {
-				// drive Right - ball is at the right
-				driveRight();
-			} else if ((gLeft < COLOR_TOLERANCE && bLeft < COLOR_TOLERANCE) && (gRight > COLOR_TOLERANCE && bRight > COLOR_TOLERANCE)) {
-				// drive Left - ball is at the left
-				driveLeft();
 			} else {
 				//ball is just ahead. balance it using the distance sensors
 				double difference = distanceSensors[FRONT_LEFT_SENSOR].getValue()

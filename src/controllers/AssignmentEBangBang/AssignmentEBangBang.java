@@ -47,7 +47,7 @@ public class AssignmentEBangBang extends DifferentialWheels {
 				// drive right - wall too near
 				driveRight();
 			} else if (sensors[S_LEFT].getValue() < WALL_TO_FAR_VALUE) {
-				// drive left - wall too far
+				// drive left - wall too far or end of wall
 				driveLeft();
 			} else {
 				// drive forward -> nothing is in front of the robot and wall distance is okay
